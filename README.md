@@ -39,3 +39,31 @@ Log in with root and no password. Then configure the sysctl setting as you would
 sysctl -w vm.max_map_count=262144
 sysctl vm.max_map_count
 ```
+
+
+Default Kibana plugins come with docker image:
+
+ingest-geoip        6.2.3
+ingest-user-agent   6.2.3
+
+AWS Kibana instance plugins:
+
+analysis-icu        6.2.3
+analysis-kuromoji   6.2.3
+analysis-phonetic   6.2.3
+analysis-seunjeon   x.x.x.x
+analysis-smartcn    6.2.3
+analysis-stempel    6.2.3
+analysis-ukrainian  6.2.3
+discovery-ec2       6.2.3
+elasticsearch-jetty 2.2.0
+ingest-attachment   6.2.3
+ingest-user-agent   6.2.3
+mapper-murmur3      6.2.3
+mapper-size         6.2.3
+repository-s3       6.2.3
+
+
+```bash
+```
+
