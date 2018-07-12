@@ -2,10 +2,11 @@
 
 Elasticsearch (part of ELK stack)
 
-[Official](https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html)
-[Official Dockerfile on Github](https://github.com/elastic/elasticsearch-docker)
-[Official Github](https://github.com/elastic/elasticsearch)
-[Deprecated repo on Docker Hub](https://hub.docker.com/_/elasticsearch/)
+
+[Official](https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html)  
+[Official Dockerfile on Github](https://github.com/elastic/elasticsearch-docker)  
+[Official Github](https://github.com/elastic/elasticsearch)  
+[Deprecated repo on Docker Hub](https://hub.docker.com/_/elasticsearch/)  
 
 
 ## The `vm.max_map_count` kernel setting needs to be set to at least 262144 for production use.
@@ -41,29 +42,24 @@ sysctl vm.max_map_count
 ```
 
 
-Default Kibana plugins come with docker image:
+Default Kibana plugins come with docker image:  
 
-ingest-geoip        6.2.3
-ingest-user-agent   6.2.3
+ingest-geoip        6.2.3  
+ingest-user-agent   6.2.3  
 
-AWS Kibana instance plugins:
+AWS Kibana instance plugins:  
 
-analysis-icu        6.2.3
-analysis-kuromoji   6.2.3
-analysis-phonetic   6.2.3
-analysis-seunjeon   x.x.x.x
-analysis-smartcn    6.2.3
-analysis-stempel    6.2.3
-analysis-ukrainian  6.2.3
-discovery-ec2       6.2.3
-elasticsearch-jetty 2.2.0
-ingest-attachment   6.2.3
-ingest-user-agent   6.2.3
-mapper-murmur3      6.2.3
-mapper-size         6.2.3
-repository-s3       6.2.3
-
-
-```bash
-```
-
+analysis-icu        6.2.3  
+analysis-kuromoji   6.2.3  
+analysis-phonetic   6.2.3  
+analysis-seunjeon   x.x.x.x  (AWS only)  
+analysis-smartcn    6.2.3  
+analysis-stempel    6.2.3  
+analysis-ukrainian  6.2.3  
+discovery-ec2       6.2.3  
+elasticsearch-jetty 2.2.0    (AWS only)  
+ingest-attachment   6.2.3  
+ingest-user-agent   6.2.3  
+mapper-murmur3      6.2.3  
+mapper-size         6.2.3  
+repository-s3       6.2.3  
