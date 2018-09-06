@@ -12,7 +12,7 @@ services:
     - discovery.type=single-node
     - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     hostname: elasticsearch-standalone
-    image: cirepo/elasticsearch-oss:6.2.3
+    image: cirepo/elasticsearch-oss:${IMAGE_TAG:-5.6.10} #6.2.3
     networks:
       local-network:
         ipv4_address: 172.16.238.62
