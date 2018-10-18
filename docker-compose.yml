@@ -13,6 +13,14 @@ services:
     - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     hostname: elasticsearch-standalone
     image: cirepo/elasticsearch-oss:${IMAGE_TAG:-5.6.10} #6.2.3
+    labels:
+      deploy.config.commit: ${LABEL_DEPLOY_CONFIG_COMMIT:-unknown}
+      deploy.config.name: ${LABEL_DEPLOY_CONFIG_NAME:-unknown}
+      deploy.config.ref: ${LABEL_DEPLOY_CONFIG_REF:-unknown}
+      deploy.util.commit: ${LABEL_DEPLOY_UTIL_COMMIT:-unknown}
+      deploy.util.ref: ${LABEL_DEPLOY_UTIL_REF:-unknown}
+      instance.name.short: ${LABEL_INSTANCE_NAME_SHORT:-standalone.elasticsearch}
+      instance.name: ${LABEL_INSTANCE_NAME:-127.0.0.1/elasticsearch/standalone}
     networks:
       local-network:
         ipv4_address: 172.16.238.62
