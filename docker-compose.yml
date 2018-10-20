@@ -3,6 +3,9 @@ version: '2.1'
 services:
   elasticsearch-standalone-develop:
     build:
+      args:
+      - IMAGE_ARG_ES_IMAGE_NAME=${IMAGE_ARG_ES_IMAGE_NAME:-elasticsearch} #elasticsearch-oss
+      - IMAGE_ARG_ES_IMAGE_VERSION=${IMAGE_ARG_ES_IMAGE_VERSION:-5.6.10} #6.2.3
       context: .
       dockerfile: Dockerfile
     container_name: elasticsearch-standalone
@@ -12,7 +15,7 @@ services:
     - discovery.type=single-node
     - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     hostname: elasticsearch-standalone
-    image: cirepo/elasticsearch-oss:${IMAGE_TAG:-5.6.10} #6.2.3
+    image: cirepo/${IMAGE_ARG_ES_IMAGE_NAME:-elasticsearch}:${IMAGE_TAG:-5.6.10} #6.2.3
     labels:
       deploy.config.commit: ${LABEL_DEPLOY_CONFIG_COMMIT:-unknown}
       deploy.config.name: ${LABEL_DEPLOY_CONFIG_NAME:-unknown}

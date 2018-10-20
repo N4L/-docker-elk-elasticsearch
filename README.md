@@ -9,6 +9,9 @@ Elasticsearch (part of ELK stack)
 [Deprecated repo on Docker Hub](https://hub.docker.com/_/elasticsearch/)  
 
 
+https://www.docker.elastic.co/
+
+
 ## The `vm.max_map_count` kernel setting needs to be set to at least 262144 for production use.
 
 Depending on your platform:
