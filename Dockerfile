@@ -31,6 +31,10 @@ RUN set -ex \
   && /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch https://artifacts.elastic.co/downloads/elasticsearch-plugins/mapper-size/mapper-size-${IMAGE_ARG_ES_IMAGE_VERSION:-5.6.10}.zip \
   && /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch https://artifacts.elastic.co/downloads/elasticsearch-plugins/repository-s3/repository-s3-${IMAGE_ARG_ES_IMAGE_VERSION:-5.6.10}.zip
 
+ENV ELASTIC_CONTAINER true
+ENV PATH /usr/share/elasticsearch/bin:$PATH
+ENV JAVA_HOME /usr/lib/jvm/jre-1.8.0-openjdk
+
 WORKDIR /usr/share/elasticsearch
 
 RUN chown -R elasticsearch:elasticsearch \
