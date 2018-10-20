@@ -8,13 +8,13 @@ services:
       - IMAGE_ARG_ES_IMAGE_VERSION=${IMAGE_ARG_ES_IMAGE_VERSION:-5.6.10} #6.2.3
       context: .
       dockerfile: Dockerfile
-    container_name: elasticsearch-standalone
+    container_name: ${CONTAINER_HOST_NAME:-standalone.elasticsearch}
     environment:
     - bootstrap.memory_lock=true
     - cluster.name=elasticsearch-standalone
     - discovery.type=single-node
     - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-    hostname: elasticsearch-standalone
+    hostname: ${CONTAINER_HOST_NAME:-standalone.elasticsearch}
     image: cirepo/${IMAGE_ARG_ES_IMAGE_NAME:-elasticsearch}:${IMAGE_TAG:-5.6.10} #6.2.3
     labels:
       deploy.config.commit: ${LABEL_DEPLOY_CONFIG_COMMIT:-unknown}

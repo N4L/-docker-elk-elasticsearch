@@ -30,3 +30,23 @@ RUN set -ex \
   && /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch https://artifacts.elastic.co/downloads/elasticsearch-plugins/mapper-murmur3/mapper-murmur3-${IMAGE_ARG_ES_IMAGE_VERSION:-5.6.10}.zip \
   && /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch https://artifacts.elastic.co/downloads/elasticsearch-plugins/mapper-size/mapper-size-${IMAGE_ARG_ES_IMAGE_VERSION:-5.6.10}.zip \
   && /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch https://artifacts.elastic.co/downloads/elasticsearch-plugins/repository-s3/repository-s3-${IMAGE_ARG_ES_IMAGE_VERSION:-5.6.10}.zip
+
+WORKDIR /usr/share/elasticsearch
+
+RUN chown -R elasticsearch:elasticsearch \
+      config \
+      data \
+      logs && \
+    chown elasticsearch:elasticsearch \
+      /usr/share/elasticsearch \
+      config/elasticsearch.yml \
+      config/log4j2.properties \
+      config/x-pack/log4j2.properties \
+      bin/es-docker && \
+    chmod 0750 bin/es-docker
+
+USER elasticsearch
+
+CMD ["/bin/bash", "bin/es-docker"]
+
+EXPOSE 9200 9300

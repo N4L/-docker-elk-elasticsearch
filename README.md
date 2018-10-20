@@ -12,6 +12,9 @@ Elasticsearch (part of ELK stack)
 https://www.docker.elastic.co/
 
 
+Default username/password: elastic/changeme
+
+
 ## The `vm.max_map_count` kernel setting needs to be set to at least 262144 for production use.
 
 Depending on your platform:
