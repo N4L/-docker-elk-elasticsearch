@@ -9,10 +9,15 @@ services:
       dockerfile: Dockerfile
     container_name: ${CONTAINER_HOST_NAME:-standalone.elk}-elasticsearch
     environment:
-    - bootstrap.memory_lock=true
-    - cluster.name=standalone.elk-elasticsearch
-    - discovery.type=single-node
-    - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    - bootstrap.memory_lock=${ELASTICSEARCH_BOOTSTRAP_MEMORYLOCK:-true}
+    - cluster.name=${ELASTICSEARCH_CLUSTER_NAME:-standalone.elk-elasticsearch}
+    - discovery.type=${ELASTICSEARCH_DISCOVERY_TYPE:-single-node}
+    - ES_JAVA_OPTS=${ES_JAVA_OPTS:--Xms512m -Xmx512m}
+    - http.host=${ELASTICSEARCH_HTTP_HOST:-0.0.0.0}
+    - network.host=${ELASTICSEARCH_NETWORK_HOST:-0.0.0.0}
+    - transport.host=${ELASTICSEARCH_TRANSPORT_HOST:-localhost}
+    # Disable X-Pack security: https://www.elastic.co/guide/en/elasticsearch/reference/5.5/security-settings.html#general-security-settings
+    - xpack.security.enabled=${ELASTICSEARCH_XPACK_SECURITY_ENABLED:-false}
     hostname: ${CONTAINER_HOST_NAME:-standalone.elk}-elasticsearch
     image: cirepo/${IMAGE_ARG_ES_IMAGE_NAME:-elasticsearch}:${IMAGE_TAG:-5.6.10} #6.2.3
     labels:
@@ -23,13 +28,14 @@ services:
       deploy.util.ref: ${LABEL_DEPLOY_UTIL_REF:-unknown}
       instance.name.short: ${LABEL_INSTANCE_NAME_SHORT:-standalone.elk-elasticsearch}
       instance.name: ${LABEL_INSTANCE_NAME:-127.0.0.1/elk-elasticsearch/standalone}
+    #mem_limit: ${MEM_LIMIT:-1g}
     networks:
       local-network:
         ipv4_address: 172.16.238.62
         #ipv6_address: 2001:3984:3989::62
     ports:
-    - 9200:9200
-    - 9300:9300
+    - ${EXTERNAL_ES_9200_PORT:-9200}:9200
+    - ${EXTERNAL_ES_9200_PORT:-9300}:9300
     restart: always
     ulimits:
       memlock:
