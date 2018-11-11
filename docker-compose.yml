@@ -1,20 +1,19 @@
-
 version: '2.1'
 services:
-  elasticsearch-standalone-develop:
+  develop-elasticsearch:
     build:
       args:
       - IMAGE_ARG_ES_IMAGE_NAME=${IMAGE_ARG_ES_IMAGE_NAME:-elasticsearch} #elasticsearch-oss
       - IMAGE_ARG_ES_IMAGE_VERSION=${IMAGE_ARG_ES_IMAGE_VERSION:-5.6.10} #6.2.3
       context: .
       dockerfile: Dockerfile
-    container_name: ${CONTAINER_HOST_NAME:-standalone.elasticsearch}
+    container_name: ${CONTAINER_HOST_NAME:-standalone.elk}-elasticsearch
     environment:
     - bootstrap.memory_lock=true
-    - cluster.name=elasticsearch-standalone
+    - cluster.name=standalone.elk-elasticsearch
     - discovery.type=single-node
     - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-    hostname: ${CONTAINER_HOST_NAME:-standalone.elasticsearch}
+    hostname: ${CONTAINER_HOST_NAME:-standalone.elk}-elasticsearch
     image: cirepo/${IMAGE_ARG_ES_IMAGE_NAME:-elasticsearch}:${IMAGE_TAG:-5.6.10} #6.2.3
     labels:
       deploy.config.commit: ${LABEL_DEPLOY_CONFIG_COMMIT:-unknown}
@@ -22,8 +21,8 @@ services:
       deploy.config.ref: ${LABEL_DEPLOY_CONFIG_REF:-unknown}
       deploy.util.commit: ${LABEL_DEPLOY_UTIL_COMMIT:-unknown}
       deploy.util.ref: ${LABEL_DEPLOY_UTIL_REF:-unknown}
-      instance.name.short: ${LABEL_INSTANCE_NAME_SHORT:-standalone.elasticsearch}
-      instance.name: ${LABEL_INSTANCE_NAME:-127.0.0.1/elasticsearch/standalone}
+      instance.name.short: ${LABEL_INSTANCE_NAME_SHORT:-standalone.elk-elasticsearch}
+      instance.name: ${LABEL_INSTANCE_NAME:-127.0.0.1/elk-elasticsearch/standalone}
     networks:
       local-network:
         ipv4_address: 172.16.238.62
