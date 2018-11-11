@@ -31,6 +31,13 @@ RUN set -ex \
   && /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch https://artifacts.elastic.co/downloads/elasticsearch-plugins/mapper-size/mapper-size-${IMAGE_ARG_ES_IMAGE_VERSION:-5.6.10}.zip \
   && /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch https://artifacts.elastic.co/downloads/elasticsearch-plugins/repository-s3/repository-s3-${IMAGE_ARG_ES_IMAGE_VERSION:-5.6.10}.zip
 
+# Remove X-Pack. see: [Unable to Uninstall X-Pack with elasticsearch:5.2.2 Docker Image #36](https://github.com/elastic/elasticsearch-docker/issues/36)
+RUN set -ex \
+  && ls -la /usr/share/elasticsearch/plugins \
+  && mv /usr/share/elasticsearch/plugins/x-pack /usr/share/elasticsearch/plugins/.removing-x-pack \
+  && mv /usr/share/elasticsearch/plugins/.removing-x-pack /usr/share/elasticsearch/plugins/x-pack \
+  && /usr/share/elasticsearch/bin/elasticsearch-plugin remove x-pack
+
 ENV ELASTIC_CONTAINER true
 ENV PATH /usr/share/elasticsearch/bin:$PATH
 ENV JAVA_HOME /usr/lib/jvm/jre-1.8.0-openjdk
