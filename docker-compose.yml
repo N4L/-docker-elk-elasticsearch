@@ -35,7 +35,7 @@ services:
         #ipv6_address: ${IPV6_ADDRESS:-2001:3984:3989::62}
     ports:
     - ${EXTERNAL_ES_9200_PORT:-9200}:9200
-    - ${EXTERNAL_ES_9200_PORT:-9300}:9300
+    - ${EXTERNAL_ES_9300_PORT:-9300}:9300
     restart: always
     ulimits:
       memlock:
