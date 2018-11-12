@@ -17,7 +17,7 @@ services:
     - network.host=${ELASTICSEARCH_NETWORK_HOST:-0.0.0.0}
     - transport.host=${ELASTICSEARCH_TRANSPORT_HOST:-localhost}
     # Disable X-Pack security: https://www.elastic.co/guide/en/elasticsearch/reference/5.5/security-settings.html#general-security-settings
-    - xpack.security.enabled=${ELASTICSEARCH_XPACK_SECURITY_ENABLED:-false}
+    #- xpack.security.enabled=${ELASTICSEARCH_XPACK_SECURITY_ENABLED:-false}
     hostname: ${CONTAINER_HOST_NAME:-standalone.elk}-elasticsearch
     image: cirepo/${IMAGE_ARG_ES_IMAGE_NAME:-elasticsearch}:${IMAGE_TAG:-5.6.10} #6.2.3
     labels:
