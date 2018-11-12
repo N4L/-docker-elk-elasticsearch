@@ -31,8 +31,8 @@ services:
     #mem_limit: ${MEM_LIMIT:-1g}
     networks:
       local-network:
-        ipv4_address: 172.16.238.62
-        #ipv6_address: 2001:3984:3989::62
+        ipv4_address: ${IPV4_ADDRESS:-172.16.238.62}
+        #ipv6_address: ${IPV6_ADDRESS:-2001:3984:3989::62}
     ports:
     - ${EXTERNAL_ES_9200_PORT:-9200}:9200
     - ${EXTERNAL_ES_9200_PORT:-9300}:9300
