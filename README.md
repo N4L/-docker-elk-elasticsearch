@@ -4,7 +4,7 @@ Elasticsearch (part of ELK stack)
 
 
 [Official](https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html)  
-[Official Dockerfile on Github](https://github.com/elastic/elasticsearch-docker)  
+[Official Dockerfile on Github](https://github.com/elastic/elasticsearch/blob/master/distribution/docker/src/docker/Dockerfile)  
 [Official Github](https://github.com/elastic/elasticsearch)  
 [Deprecated repo on Docker Hub](https://hub.docker.com/_/elasticsearch/)  
 

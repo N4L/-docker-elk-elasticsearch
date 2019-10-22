@@ -2,7 +2,7 @@
 ARG IMAGE_ARG_ES_IMAGE_NAME
 ARG IMAGE_ARG_ES_IMAGE_VERSION
 
-FROM docker.elastic.co/elasticsearch/${IMAGE_ARG_ES_IMAGE_NAME:-elasticsearch}:${IMAGE_ARG_ES_IMAGE_VERSION:-7.3.2} as base
+FROM docker.elastic.co/elasticsearch/${IMAGE_ARG_ES_IMAGE_NAME:-elasticsearch}:${IMAGE_ARG_ES_IMAGE_VERSION:-7.4.0} as base
 
 FROM scratch
 
@@ -15,21 +15,22 @@ COPY --from=base / /
 #elasticsearch-jetty-2.2.0
 
 # come with docker image
-#/usr/share/elasticsearch/bin/elasticsearch-plugin install --batch https://artifacts.elastic.co/downloads/elasticsearch-plugins/ingest-geoip/ingest-geoip-${IMAGE_ARG_ES_IMAGE_VERSION:-7.3.2}.zip
+#/usr/share/elasticsearch/bin/elasticsearch-plugin install --batch https://artifacts.elastic.co/downloads/elasticsearch-plugins/ingest-geoip/ingest-geoip-${IMAGE_ARG_ES_IMAGE_VERSION:-7.4.0}.zip
 # come with docker image
-#/usr/share/elasticsearch/bin/elasticsearch-plugin install --batch https://artifacts.elastic.co/downloads/elasticsearch-plugins/ingest-user-agent/ingest-user-agent-${IMAGE_ARG_ES_IMAGE_VERSION:-7.3.2}.zip
+#/usr/share/elasticsearch/bin/elasticsearch-plugin install --batch https://artifacts.elastic.co/downloads/elasticsearch-plugins/ingest-user-agent/ingest-user-agent-${IMAGE_ARG_ES_IMAGE_VERSION:-7.4.0}.zip
 RUN set -ex \
-  && /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-icu/analysis-icu-${IMAGE_ARG_ES_IMAGE_VERSION:-7.3.2}.zip \
-  && /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-kuromoji/analysis-kuromoji-${IMAGE_ARG_ES_IMAGE_VERSION:-7.3.2}.zip \
-  && /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-phonetic/analysis-phonetic-${IMAGE_ARG_ES_IMAGE_VERSION:-7.3.2}.zip \
-  && /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-smartcn/analysis-smartcn-${IMAGE_ARG_ES_IMAGE_VERSION:-7.3.2}.zip \
-  && /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-stempel/analysis-stempel-${IMAGE_ARG_ES_IMAGE_VERSION:-7.3.2}.zip \
-  && /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-ukrainian/analysis-ukrainian-${IMAGE_ARG_ES_IMAGE_VERSION:-7.3.2}.zip \
-  && /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch https://artifacts.elastic.co/downloads/elasticsearch-plugins/discovery-ec2/discovery-ec2-${IMAGE_ARG_ES_IMAGE_VERSION:-7.3.2}.zip \
-  && /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch https://artifacts.elastic.co/downloads/elasticsearch-plugins/ingest-attachment/ingest-attachment-${IMAGE_ARG_ES_IMAGE_VERSION:-7.3.2}.zip \
-  && /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch https://artifacts.elastic.co/downloads/elasticsearch-plugins/mapper-murmur3/mapper-murmur3-${IMAGE_ARG_ES_IMAGE_VERSION:-7.3.2}.zip \
-  && /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch https://artifacts.elastic.co/downloads/elasticsearch-plugins/mapper-size/mapper-size-${IMAGE_ARG_ES_IMAGE_VERSION:-7.3.2}.zip \
-  && /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch https://artifacts.elastic.co/downloads/elasticsearch-plugins/repository-s3/repository-s3-${IMAGE_ARG_ES_IMAGE_VERSION:-7.3.2}.zip
+  && cd /usr/share/elasticsearch \
+  && bin/elasticsearch-plugin install --batch https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-icu/analysis-icu-${IMAGE_ARG_ES_IMAGE_VERSION:-7.4.0}.zip \
+  && bin/elasticsearch-plugin install --batch analysis-kuromoji \
+  && bin/elasticsearch-plugin install --batch analysis-phonetic \
+  && bin/elasticsearch-plugin install --batch analysis-smartcn \
+  && bin/elasticsearch-plugin install --batch analysis-stempel \
+  && bin/elasticsearch-plugin install --batch analysis-ukrainian \
+  && bin/elasticsearch-plugin install --batch https://artifacts.elastic.co/downloads/elasticsearch-plugins/discovery-ec2/discovery-ec2-${IMAGE_ARG_ES_IMAGE_VERSION:-7.4.0}.zip \
+  && bin/elasticsearch-plugin install --batch ingest-attachment \
+  && bin/elasticsearch-plugin install --batch mapper-murmur3 \
+  && bin/elasticsearch-plugin install --batch mapper-size \
+  && bin/elasticsearch-plugin install --batch repository-s3
 
 # Remove X-Pack. see: [Unable to Uninstall X-Pack with elasticsearch:5.2.2 Docker Image #36](https://github.com/elastic/elasticsearch-docker/issues/36)
 # RUN set -ex \
@@ -60,7 +61,9 @@ RUN chown -R elasticsearch:0 \
 
 # Openshift overrides USER and uses ones with randomly uid>1024 and gid=0
 # Allow ENTRYPOINT (and ES) to run even with a different user
-RUN chgrp 0 /usr/local/bin/docker-entrypoint.sh &&     chmod g=u /etc/passwd &&     chmod 0775 /usr/local/bin/docker-entrypoint.sh
+RUN chgrp 0 /usr/local/bin/docker-entrypoint.sh && \
+    chmod g=u /etc/passwd && \
+    chmod 0775 /usr/local/bin/docker-entrypoint.sh
 
 EXPOSE 9200 9300
 
