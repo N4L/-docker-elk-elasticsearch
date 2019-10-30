@@ -67,6 +67,11 @@ RUN chgrp 0 /usr/local/bin/docker-entrypoint.sh && \
 
 EXPOSE 9200 9300
 
-ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
+COPY --chown=elasticsearch docker /
+RUN set -ex \
+  && chmod 755 /usr/local/bin/entrypoint.sh
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+
+#ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 # Dummy overridable parameter parsed by entrypoint
 CMD ["eswrapper"]

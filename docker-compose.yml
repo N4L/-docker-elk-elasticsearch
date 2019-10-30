@@ -11,21 +11,26 @@ services:
       - IPC_LOCK
     container_name: ${CONTAINER_HOST_NAME:-standalone.elk}-elasticsearch
     environment:
-      - bootstrap.memory_lock=${ELASTICSEARCH_BOOTSTRAP_MEMORYLOCK:-true}
-      - cluster.name=${ELASTICSEARCH_CLUSTER_NAME:-standalone.elk-elasticsearch}
-      - discovery.type=${ELASTICSEARCH_DISCOVERY_TYPE:-single-node}
-      - http.host=${ELASTICSEARCH_HTTP_HOST:-0.0.0.0}
-      - http.port=${ELASTICSEARCH_HTTP_PORT:-9200}
-      #- network.host: ${ELASTICSEARCH_NETWORK_HOST:_non_loopback_}
-      - network.host=${ELASTICSEARCH_NETWORK_HOST:-0.0.0.0}
-      - network.publish_host=${ELASTICSEARCH_NETWORK_PUBLISHHOST:-172.16.238.62}
-      - transport.host=${ELASTICSEARCH_TRANSPORT_HOST:-localhost}
-      - transport.publish_host=${ELASTICSEARCH_TRANSPORT_PUBLISHHOST:-localhost}
-      - transport.publish_port=${ELASTICSEARCH_TRANSPORT_PUBLISHPORT:-9300}
-      - transport.tcp.port=${ELASTICSEARCH_TRANSPORT_TCP_PORT:-9300}
+      action.destructive_requires_name: 'true'
+      bootstrap.memory_lock: ${ELASTICSEARCH_BOOTSTRAP_MEMORYLOCK:-true}
+      cluster.name: ${ELASTICSEARCH_CLUSTER_NAME:-standalone.elk-elasticsearch}
+      discovery.type: ${ELASTICSEARCH_DISCOVERY_TYPE:-single-node}
+      http.host: ${ELASTICSEARCH_HTTP_HOST:-0.0.0.0}
+      http.port: ${ELASTICSEARCH_HTTP_PORT:-9200}
+      indices.memory.index_buffer_size: 512M
+      indices.memory.max_index_buffer_size: 512M
+      indices.query.bool.max_clause_count: 8192
+      #network.host: ${ELASTICSEARCH_NETWORK_HOST:_non_loopback_}
+      network.host: ${ELASTICSEARCH_NETWORK_HOST:-0.0.0.0}
+      network.publish_host: ${ELASTICSEARCH_NETWORK_PUBLISHHOST:-172.16.238.62}
+      search.max_buckets: ${ELASTICSEARCH_SEARCH_MAX_BUCKETS:-2147483647}
+      transport.host: ${ELASTICSEARCH_TRANSPORT_HOST:-localhost}
+      transport.publish_host: ${ELASTICSEARCH_TRANSPORT_PUBLISHHOST:-localhost}
+      transport.publish_port: ${ELASTICSEARCH_TRANSPORT_PUBLISHPORT:-9300}
+      transport.tcp.port: ${ELASTICSEARCH_TRANSPORT_TCP_PORT:-9300}
       # Disable X-Pack security: https://www.elastic.co/guide/en/elasticsearch/reference/5.5/security-settings.html#general-security-settings
-      #- xpack.security.enabled=${ELASTICSEARCH_XPACK_SECURITY_ENABLED:-false}
-      - ES_JAVA_OPTS=${ES_JAVA_OPTS:--Xms512m -Xmx2048m}
+      #xpack.security.enabled: ${ELASTICSEARCH_XPACK_SECURITY_ENABLED:-false}
+      ES_JAVA_OPTS: ${ES_JAVA_OPTS:--Xms1024m -Xmx2048m}
     hostname: ${CONTAINER_HOST_NAME:-standalone.elk}-elasticsearch
     image: cirepo/${IMAGE_ARG_ES_IMAGE_NAME:-elasticsearch-oss}:${IMAGE_TAG:-7.4.0} #5.6.10
     labels:

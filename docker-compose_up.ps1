@@ -7,7 +7,7 @@ $env:IMAGE_ARG_ES_IMAGE_NAME = 'elasticsearch'
 
 docker-compose down -v
 
-$confirmation = Read-Host "Do you want clear data:"
+$confirmation = Read-Host "Do you want clear data"
 if ($confirmation -eq "y") {
     Remove-Item -Path "data\data\*" -Exclude ".gitignore" -Recurse;
 }

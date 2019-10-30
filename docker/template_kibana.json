@@ -1,0 +1,9 @@
+{
+  "index_patterns":[ ".kibana" ],
+  "order" : 1,
+  "mappings": {
+    "properties": {
+      "type": { "type": "keyword" }
+    }
+  }
+}
