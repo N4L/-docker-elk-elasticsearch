@@ -69,3 +69,13 @@ ingest-user-agent   6.2.3
 mapper-murmur3      6.2.3  
 mapper-size         6.2.3  
 repository-s3       6.2.3  
+
+
+### Performance
+
+`GET /_stats`
+
+If we are a write-heavy Elasticsearch user, 
+we should use a tool like iostat to keep an eye on disk IO metrics over time.
+
+`index.translog.flush_threshold_size`
