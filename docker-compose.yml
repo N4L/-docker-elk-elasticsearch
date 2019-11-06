@@ -3,7 +3,7 @@ services:
   develop-elasticsearch:
     build:
       args:
-        - IMAGE_ARG_ES_IMAGE_NAME=${IMAGE_ARG_ES_IMAGE_NAME:-elasticsearch-oss} #elasticsearch-oss
+        - IMAGE_ARG_ES_IMAGE_NAME=${IMAGE_ARG_ES_IMAGE_NAME:-elasticsearch} #elasticsearch-oss
         - IMAGE_ARG_ES_IMAGE_VERSION=${IMAGE_ARG_ES_IMAGE_VERSION:-7.4.0} #5.6.10
       context: .
       dockerfile: Dockerfile
@@ -40,7 +40,7 @@ services:
       xpack.security.enabled: ${XPACK_SECURITY_ENABLED:-false}
       ES_JAVA_OPTS: ${ES_JAVA_OPTS:--Xms4096m -Xmx4096m}
     hostname: ${CONTAINER_HOST_NAME:-standalone.elk}-elasticsearch
-    image: cirepo/${IMAGE_ARG_ES_IMAGE_NAME:-elasticsearch-oss}:${IMAGE_TAG:-7.4.0} #5.6.10
+    image: cirepo/${IMAGE_ARG_ES_IMAGE_NAME:-elasticsearch}:${IMAGE_TAG:-7.4.0} #5.6.10
     labels:
       deploy.config.commit: ${LABEL_DEPLOY_CONFIG_COMMIT:-unknown}
       deploy.config.name: ${LABEL_DEPLOY_CONFIG_NAME:-unknown}

@@ -2,7 +2,7 @@
 ARG IMAGE_ARG_ES_IMAGE_NAME
 ARG IMAGE_ARG_ES_IMAGE_VERSION
 
-FROM docker.elastic.co/elasticsearch/${IMAGE_ARG_ES_IMAGE_NAME:-elasticsearch-oss}:${IMAGE_ARG_ES_IMAGE_VERSION:-7.4.0} as base
+FROM docker.elastic.co/elasticsearch/${IMAGE_ARG_ES_IMAGE_NAME:-elasticsearch}:${IMAGE_ARG_ES_IMAGE_VERSION:-7.4.0} as base
 
 FROM scratch
 
