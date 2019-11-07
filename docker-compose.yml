@@ -19,8 +19,6 @@ services:
       http.compression_level: ${ELASTICSEARCH_HTTP_COMPRESSION_LEVEL:-5}
       http.host: ${ELASTICSEARCH_HTTP_HOST:-0.0.0.0}
       http.port: ${ELASTICSEARCH_HTTP_PORT:-9200}
-      index.queries.cache.enabled: ${ELASTICSEARCH_INDEX_QUERIES_CACHE_ENABLED:-false}
-      #index.queries.cache.size: ${ELASTICSEARCH_INDEX_QUERIES_CACHE_SIZE:-4g}
       indices.memory.index_buffer_size: ${ELASTICSEARCH_INDICES_MEMORY_INDEX_BUFFER_SIZE:-30%}
       indices.memory.max_index_buffer_size: ${ELASTICSEARCH_INDICES_MEMORY_MAX_INDEX_BUFFER_SIZE:-3g}
       indices.query.bool.max_clause_count: ${INDICES_QUERY_BOOL_MAX_CLAUSE_COUNT:-8192}
@@ -29,7 +27,7 @@ services:
       network.publish_host: ${ELASTICSEARCH_NETWORK_PUBLISHHOST:-172.16.238.62}
       node.attr.box_type: ${ELASTICSEARCH_NODE_ATTR_BOX_TYPE:-hot}
       search.max_buckets: ${ELASTICSEARCH_SEARCH_MAX_BUCKETS:-2147483647}
-      thread_pool.write.size: ${ELASTICSEARCH_THREAD_POOL_WRITE_SIZE:-7}
+      thread_pool.write.size: ${ELASTICSEARCH_THREAD_POOL_WRITE_SIZE:-2}
       thread_pool.write.queue_size: ${ELASTICSEARCH_THREAD_POOL_WRITE_QUEUE_SIZE:-1000}
       #transport.cname_in_publish_address: ${ELASTICSEARCH_TRANSPORT_CNAME_IN_PUBLISH_ADDRESS:-true}
       transport.host: ${ELASTICSEARCH_TRANSPORT_HOST:-localhost}
@@ -49,7 +47,7 @@ services:
       deploy.util.ref: ${LABEL_DEPLOY_UTIL_REF:-unknown}
       instance.name.short: ${LABEL_INSTANCE_NAME_SHORT:-standalone.elk-elasticsearch}
       instance.name: ${LABEL_INSTANCE_NAME:-127.0.0.1/elk-elasticsearch/standalone}
-    #mem_limit: ${MEM_LIMIT:-1g}
+    #mem_limit: ${MEM_LIMIT:-16g}
     networks:
       local-network:
         ipv4_address: ${IPV4_ADDRESS:-172.16.238.62}
