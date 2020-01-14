@@ -2,7 +2,7 @@
 ARG IMAGE_ARG_ES_IMAGE_NAME
 ARG IMAGE_ARG_ES_IMAGE_VERSION
 
-FROM docker.elastic.co/elasticsearch/${IMAGE_ARG_ES_IMAGE_NAME:-elasticsearch}:${IMAGE_ARG_ES_IMAGE_VERSION:-7.4.0} as base
+FROM docker.elastic.co/elasticsearch/${IMAGE_ARG_ES_IMAGE_NAME:-elasticsearch}:${IMAGE_ARG_ES_IMAGE_VERSION:-7.5.1} as base
 
 FROM scratch
 
@@ -15,18 +15,18 @@ COPY --from=base / /
 #elasticsearch-jetty-2.2.0
 
 # come with docker image
-#/usr/share/elasticsearch/bin/elasticsearch-plugin install --batch https://artifacts.elastic.co/downloads/elasticsearch-plugins/ingest-geoip/ingest-geoip-${IMAGE_ARG_ES_IMAGE_VERSION:-7.4.0}.zip
+#/usr/share/elasticsearch/bin/elasticsearch-plugin install --batch https://artifacts.elastic.co/downloads/elasticsearch-plugins/ingest-geoip/ingest-geoip-${IMAGE_ARG_ES_IMAGE_VERSION:-7.5.1}.zip
 # come with docker image
-#/usr/share/elasticsearch/bin/elasticsearch-plugin install --batch https://artifacts.elastic.co/downloads/elasticsearch-plugins/ingest-user-agent/ingest-user-agent-${IMAGE_ARG_ES_IMAGE_VERSION:-7.4.0}.zip
+#/usr/share/elasticsearch/bin/elasticsearch-plugin install --batch https://artifacts.elastic.co/downloads/elasticsearch-plugins/ingest-user-agent/ingest-user-agent-${IMAGE_ARG_ES_IMAGE_VERSION:-7.5.1}.zip
 RUN set -ex \
   && cd /usr/share/elasticsearch \
-  && bin/elasticsearch-plugin install --batch https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-icu/analysis-icu-${IMAGE_ARG_ES_IMAGE_VERSION:-7.4.0}.zip \
+  && bin/elasticsearch-plugin install --batch https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-icu/analysis-icu-${IMAGE_ARG_ES_IMAGE_VERSION:-7.5.1}.zip \
   && bin/elasticsearch-plugin install --batch analysis-kuromoji \
   && bin/elasticsearch-plugin install --batch analysis-phonetic \
   && bin/elasticsearch-plugin install --batch analysis-smartcn \
   && bin/elasticsearch-plugin install --batch analysis-stempel \
   && bin/elasticsearch-plugin install --batch analysis-ukrainian \
-  && bin/elasticsearch-plugin install --batch https://artifacts.elastic.co/downloads/elasticsearch-plugins/discovery-ec2/discovery-ec2-${IMAGE_ARG_ES_IMAGE_VERSION:-7.4.0}.zip \
+  && bin/elasticsearch-plugin install --batch https://artifacts.elastic.co/downloads/elasticsearch-plugins/discovery-ec2/discovery-ec2-${IMAGE_ARG_ES_IMAGE_VERSION:-7.5.1}.zip \
   && bin/elasticsearch-plugin install --batch ingest-attachment \
   && bin/elasticsearch-plugin install --batch mapper-murmur3 \
   && bin/elasticsearch-plugin install --batch mapper-size \
