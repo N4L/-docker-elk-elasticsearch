@@ -4,7 +4,7 @@ services:
     build:
       args:
         - IMAGE_ARG_ES_IMAGE_NAME=${IMAGE_ARG_ES_IMAGE_NAME:-elasticsearch} #elasticsearch-oss
-        - IMAGE_ARG_ES_IMAGE_VERSION=${IMAGE_ARG_ES_IMAGE_VERSION:-7.5.1} #5.6.10
+        - IMAGE_ARG_ES_IMAGE_VERSION=${IMAGE_ARG_ES_IMAGE_VERSION:-7.5.2} #5.6.10
       context: .
       dockerfile: Dockerfile
     cap_add:
@@ -29,12 +29,13 @@ services:
       network.host: ${ELASTICSEARCH_NETWORK_HOST:-0.0.0.0}
       network.publish_host: ${ELASTICSEARCH_NETWORK_PUBLISHHOST:-172.16.238.62}
       #node.attr.box_type: ${ELASTICSEARCH_NODE_ATTR_BOX_TYPE:-hot}
+      path.logs: '/var/log/elasticsearch'
       search.max_buckets: ${ELASTICSEARCH_SEARCH_MAX_BUCKETS:-2147483647}
       search.max_open_scroll_context: ${ELASTICSEARCH_SEARCH_MAX_OPEN_SCROLL_CONTEXT:-2147483647}
       thread_pool.write.size: ${ELASTICSEARCH_THREAD_POOL_WRITE_SIZE:-2}
       thread_pool.write.queue_size: ${ELASTICSEARCH_THREAD_POOL_WRITE_QUEUE_SIZE:-1000}
       # suppress warning: transport.publish_address was printed as [ip:port] instead of [hostname/ip:port]. This format is deprecated and will change to [hostname/ip:port] in a future version. Use -Des.transport.cname_in_publish_address=true to enforce non-deprecated formatting.
-      #transport.cname_in_publish_address: ${ELASTICSEARCH_TRANSPORT_CNAME_IN_PUBLISH_ADDRESS:-false}
+      #transport.cname_in_publish_address: ${ELASTICSEARCH_TRANSPORT_CNAME_IN_PUBLISH_ADDRESS:-true}
       transport.host: ${ELASTICSEARCH_TRANSPORT_HOST:-localhost}
       transport.publish_host: ${ELASTICSEARCH_TRANSPORT_PUBLISHHOST:-localhost}
       transport.publish_port: ${ELASTICSEARCH_TRANSPORT_PUBLISHPORT:-9300}
@@ -43,7 +44,7 @@ services:
       xpack.security.enabled: ${XPACK_SECURITY_ENABLED:-false}
       ES_JAVA_OPTS: ${ES_JAVA_OPTS:--Xms5120m -Xmx5120m}
     hostname: ${CONTAINER_HOST_NAME:-standalone.elk}-elasticsearch
-    image: cirepo/${IMAGE_ARG_ES_IMAGE_NAME:-elasticsearch}:${IMAGE_TAG:-7.5.1} #5.6.10
+    image: cirepo/${IMAGE_ARG_ES_IMAGE_NAME:-elasticsearch}:${IMAGE_TAG:-7.5.2} #5.6.10
     labels:
       deploy.config.commit: ${LABEL_DEPLOY_CONFIG_COMMIT:-unknown}
       deploy.config.name: ${LABEL_DEPLOY_CONFIG_NAME:-unknown}
@@ -70,6 +71,9 @@ services:
         hard: 65536
     volumes:
       - data:/usr/share/elasticsearch/data
+      - log:/var/log/elasticsearch
+#      - filebeat-config:/etc/filebeat
+#      - metricbeat-config:/etc/metricbeat
 
 #  # docker run --network local-network --ip 172.16.238.61 -p 5000:5000 elastichq/elasticsearch-hq
 #  develop-elasticsearch-hq:
@@ -105,5 +109,23 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: ${PWD}/data/data
+      device: ${PWD}/data/usr/share/elasticsearch/data
+      o: bind
+  log:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${PWD}/data/var/log/elasticsearch
+      o: bind
+  filebeat-config:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${PWD}/data/etc/filebeat
+      o: bind
+  metricbeat-config:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${PWD}/data/etc/metricbeat
       o: bind

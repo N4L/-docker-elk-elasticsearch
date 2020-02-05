@@ -15,7 +15,7 @@ docker-compose down -v
 
 $confirmation = Read-Host "Do you want clear data"
 if ($confirmation -eq "y") {
-    Remove-Item -Path "data\data\*" -Exclude ".gitignore" -Recurse;
+    Remove-Item -Path "data\usr\share\elasticsearch\data\*" -Exclude ".gitignore" -Recurse;
 }
 
 docker-compose up -d
