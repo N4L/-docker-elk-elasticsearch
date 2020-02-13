@@ -15,6 +15,18 @@ https://www.docker.elastic.co/
 Default username/password: elastic/changeme
 
 
+## Enable monitoring
+
+PUT _cluster/settings
+```json
+{
+  "persistent": {
+    "xpack.monitoring.collection.enabled": true
+  }
+}
+```
+
+
 ## The `vm.max_map_count` kernel setting needs to be set to at least 262144 for production use.
 
 Depending on your platform:
