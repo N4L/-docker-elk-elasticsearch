@@ -19,7 +19,9 @@ services:
       http.compression: ${ELASTICSEARCH_HTTP_COMPRESSION:-true}
       http.compression_level: ${ELASTICSEARCH_HTTP_COMPRESSION_LEVEL:-5}
       http.host: ${ELASTICSEARCH_HTTP_HOST:-0.0.0.0}
+      http.max_content_length: ${ELASTICSEARCH_HTTP_MAX_CONTENT_LENGTH:-1024mb}
       http.max_initial_line_length: ${ELASTICSEARCH_HTTP_MAX_INITIAL_LINE_LENGTH:-16kb}
+      http.max_header_size: ${ELASTICSEARCH_HTTP_MAX_HEADER_SIZE:-1mb}
       http.port: ${ELASTICSEARCH_HTTP_PORT:-9200}
       indices.memory.index_buffer_size: ${ELASTICSEARCH_INDICES_MEMORY_INDEX_BUFFER_SIZE:-30%}
       indices.memory.max_index_buffer_size: ${ELASTICSEARCH_INDICES_MEMORY_MAX_INDEX_BUFFER_SIZE:-3g}
