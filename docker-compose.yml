@@ -4,7 +4,7 @@ services:
     build:
       args:
         - IMAGE_ARG_ES_IMAGE_NAME=${IMAGE_ARG_ES_IMAGE_NAME:-elasticsearch} #elasticsearch-oss
-        - IMAGE_ARG_ES_IMAGE_VERSION=${IMAGE_ARG_ES_IMAGE_VERSION:-7.5.2} #5.6.10
+        - IMAGE_ARG_ES_IMAGE_VERSION=${IMAGE_ARG_ES_IMAGE_VERSION:-7.6.0} #5.6.10
       context: .
       dockerfile: Dockerfile
     cap_add:
@@ -20,33 +20,30 @@ services:
       http.compression_level: ${ELASTICSEARCH_HTTP_COMPRESSION_LEVEL:-5}
       http.host: ${ELASTICSEARCH_HTTP_HOST:-0.0.0.0}
       http.max_content_length: ${ELASTICSEARCH_HTTP_MAX_CONTENT_LENGTH:-1024mb}
-      http.max_initial_line_length: ${ELASTICSEARCH_HTTP_MAX_INITIAL_LINE_LENGTH:-16kb}
       http.max_header_size: ${ELASTICSEARCH_HTTP_MAX_HEADER_SIZE:-1mb}
+      http.max_initial_line_length: ${ELASTICSEARCH_HTTP_MAX_INITIAL_LINE_LENGTH:-16kb}
       http.port: ${ELASTICSEARCH_HTTP_PORT:-9200}
       indices.memory.index_buffer_size: ${ELASTICSEARCH_INDICES_MEMORY_INDEX_BUFFER_SIZE:-30%}
       indices.memory.max_index_buffer_size: ${ELASTICSEARCH_INDICES_MEMORY_MAX_INDEX_BUFFER_SIZE:-3g}
       indices.query.bool.max_clause_count: ${INDICES_QUERY_BOOL_MAX_CLAUSE_COUNT:-8192}
       logger.level: ${LOGGER_LEVEL:-INFO}
-      #network.host: ${ELASTICSEARCH_NETWORK_HOST:_non_loopback_}
-      network.host: ${ELASTICSEARCH_NETWORK_HOST:-0.0.0.0}
+      network.host: ${ELASTICSEARCH_NETWORK_HOST:-0.0.0.0} #network.host: _non_loopback_
       network.publish_host: ${ELASTICSEARCH_NETWORK_PUBLISHHOST:-172.16.238.62}
       #node.attr.box_type: ${ELASTICSEARCH_NODE_ATTR_BOX_TYPE:-hot}
       path.logs: '/var/log/elasticsearch'
       search.max_buckets: ${ELASTICSEARCH_SEARCH_MAX_BUCKETS:-2147483647}
       search.max_open_scroll_context: ${ELASTICSEARCH_SEARCH_MAX_OPEN_SCROLL_CONTEXT:-2147483647}
-      thread_pool.write.size: ${ELASTICSEARCH_THREAD_POOL_WRITE_SIZE:-2}
       thread_pool.write.queue_size: ${ELASTICSEARCH_THREAD_POOL_WRITE_QUEUE_SIZE:-1000}
-      # suppress warning: transport.publish_address was printed as [ip:port] instead of [hostname/ip:port]. This format is deprecated and will change to [hostname/ip:port] in a future version. Use -Des.transport.cname_in_publish_address=true to enforce non-deprecated formatting.
-      #transport.cname_in_publish_address: ${ELASTICSEARCH_TRANSPORT_CNAME_IN_PUBLISH_ADDRESS:-true}
+      thread_pool.write.size: ${ELASTICSEARCH_THREAD_POOL_WRITE_SIZE:-2}
+      #transport.cname_in_publish_address: ${ELASTICSEARCH_TRANSPORT_CNAME_IN_PUBLISH_ADDRESS:-true} # suppress warning: transport.publish_address was printed as [ip:port] instead of [hostname/ip:port]. This format is deprecated and will change to [hostname/ip:port] in a future version. Use -Des.transport.cname_in_publish_address=true to enforce non-deprecated formatting.
       transport.host: ${ELASTICSEARCH_TRANSPORT_HOST:-localhost}
       transport.publish_host: ${ELASTICSEARCH_TRANSPORT_PUBLISHHOST:-localhost}
       transport.publish_port: ${ELASTICSEARCH_TRANSPORT_PUBLISHPORT:-9300}
       transport.tcp.port: ${ELASTICSEARCH_TRANSPORT_TCP_PORT:-9300}
-      # Disable X-Pack security: https://www.elastic.co/guide/en/elasticsearch/reference/5.5/security-settings.html#general-security-settings
-      xpack.security.enabled: ${XPACK_SECURITY_ENABLED:-false}
+      xpack.security.enabled: ${XPACK_SECURITY_ENABLED:-false} # Disable X-Pack security: https://www.elastic.co/guide/en/elasticsearch/reference/5.5/security-settings.html#general-security-settings
       ES_JAVA_OPTS: ${ES_JAVA_OPTS:--Xms5120m -Xmx5120m}
     hostname: ${CONTAINER_HOST_NAME:-standalone.elk}-elasticsearch
-    image: cirepo/${IMAGE_ARG_ES_IMAGE_NAME:-elasticsearch}:${IMAGE_TAG:-7.5.2} #5.6.10
+    image: cirepo/${IMAGE_ARG_ES_IMAGE_NAME:-elasticsearch}:${IMAGE_TAG:-7.6.0} #5.6.10
     labels:
       deploy.config.commit: ${LABEL_DEPLOY_CONFIG_COMMIT:-unknown}
       deploy.config.name: ${LABEL_DEPLOY_CONFIG_NAME:-unknown}
