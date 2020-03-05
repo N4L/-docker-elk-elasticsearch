@@ -2,11 +2,15 @@
 ARG IMAGE_ARG_ES_IMAGE_NAME
 ARG IMAGE_ARG_ES_IMAGE_VERSION
 
-FROM docker.elastic.co/elasticsearch/${IMAGE_ARG_ES_IMAGE_NAME:-elasticsearch}:${IMAGE_ARG_ES_IMAGE_VERSION:-7.6.0} as base
+FROM docker.elastic.co/elasticsearch/${IMAGE_ARG_ES_IMAGE_NAME:-elasticsearch}:${IMAGE_ARG_ES_IMAGE_VERSION:-6.8.6} as base
 
 FROM scratch
 
 COPY --from=base / /
+
+ENV ELASTIC_CONTAINER true
+ENV PATH /usr/share/elasticsearch/bin:$PATH
+ENV JAVA_HOME /opt/jdk-13.0.1+9
 
 # see: https://bitbucket.org/eunjeon/seunjeon/raw/master/elasticsearch/scripts/downloader.sh
 #/usr/share/elasticsearch/bin/elasticsearch-plugin install --batch https://oss.sonatype.org/service/local/repositories/releases/content/org/bitbucket/eunjeon/elasticsearch-analysis-seunjeon/6.1.1.1/elasticsearch-analysis-seunjeon-6.1.1.1.zip
@@ -15,37 +19,38 @@ COPY --from=base / /
 #elasticsearch-jetty-2.2.0
 
 # come with docker image
-#/usr/share/elasticsearch/bin/elasticsearch-plugin install --batch https://artifacts.elastic.co/downloads/elasticsearch-plugins/ingest-geoip/ingest-geoip-${IMAGE_ARG_ES_IMAGE_VERSION:-7.6.0}.zip
+#/usr/share/elasticsearch/bin/elasticsearch-plugin install --batch https://artifacts.elastic.co/downloads/elasticsearch-plugins/ingest-geoip/ingest-geoip-${IMAGE_ARG_ES_IMAGE_VERSION:-6.8.6}.zip
 # come with docker image
-#/usr/share/elasticsearch/bin/elasticsearch-plugin install --batch https://artifacts.elastic.co/downloads/elasticsearch-plugins/ingest-user-agent/ingest-user-agent-${IMAGE_ARG_ES_IMAGE_VERSION:-7.6.0}.zip
+#/usr/share/elasticsearch/bin/elasticsearch-plugin install --batch https://artifacts.elastic.co/downloads/elasticsearch-plugins/ingest-user-agent/ingest-user-agent-${IMAGE_ARG_ES_IMAGE_VERSION:-6.8.6}.zip
 RUN set -ex \
   && cd /usr/share/elasticsearch \
-  && bin/elasticsearch-plugin install --batch https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-icu/analysis-icu-${IMAGE_ARG_ES_IMAGE_VERSION:-7.6.0}.zip \
+  && bin/elasticsearch-plugin install --batch https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-icu/analysis-icu-${IMAGE_ARG_ES_IMAGE_VERSION:-6.8.6}.zip \
   && bin/elasticsearch-plugin install --batch analysis-kuromoji \
   && bin/elasticsearch-plugin install --batch analysis-phonetic \
   && bin/elasticsearch-plugin install --batch analysis-smartcn \
   && bin/elasticsearch-plugin install --batch analysis-stempel \
   && bin/elasticsearch-plugin install --batch analysis-ukrainian \
-  && bin/elasticsearch-plugin install --batch https://artifacts.elastic.co/downloads/elasticsearch-plugins/discovery-ec2/discovery-ec2-${IMAGE_ARG_ES_IMAGE_VERSION:-7.6.0}.zip \
+  && bin/elasticsearch-plugin install --batch https://artifacts.elastic.co/downloads/elasticsearch-plugins/discovery-ec2/discovery-ec2-${IMAGE_ARG_ES_IMAGE_VERSION:-6.8.6}.zip \
   && bin/elasticsearch-plugin install --batch ingest-attachment \
   && bin/elasticsearch-plugin install --batch mapper-murmur3 \
   && bin/elasticsearch-plugin install --batch mapper-size \
   && bin/elasticsearch-plugin install --batch repository-s3
 
 RUN set -ex \
-  && curl -L -O https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-${IMAGE_ARG_ES_IMAGE_VERSION:-7.6.0}-x86_64.rpm \
-  && rpm -iv metricbeat-${IMAGE_ARG_ES_IMAGE_VERSION:-7.6.0}-x86_64.rpm \
-  && metricbeat modules enable elasticsearch-xpack \
-  && chown root /etc/metricbeat/metricbeat.yml /etc/metricbeat/modules.d/elasticsearch-xpack.yml /etc/metricbeat/modules.d/system.yml \
-  && rm -f metricbeat-${IMAGE_ARG_ES_IMAGE_VERSION:-7.6.0}-x86_64.rpm
+  && curl -L -O https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-${IMAGE_ARG_ES_IMAGE_VERSION:-6.8.6}-x86_64.rpm \
+  && rpm -iv metricbeat-${IMAGE_ARG_ES_IMAGE_VERSION:-6.8.6}-x86_64.rpm \
+#  && metricbeat modules enable elasticsearch-xpack \
+#  && chown root /etc/metricbeat/metricbeat.yml /etc/metricbeat/modules.d/elasticsearch-xpack.yml /etc/metricbeat/modules.d/system.yml \
+  && chown root /etc/metricbeat/metricbeat.yml /etc/metricbeat/modules.d/system.yml \
+  && rm -f metricbeat-${IMAGE_ARG_ES_IMAGE_VERSION:-6.8.6}-x86_64.rpm
 
 RUN set -ex \
-  && curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-${IMAGE_ARG_ES_IMAGE_VERSION:-7.6.0}-x86_64.rpm \
-  && rpm -vi filebeat-${IMAGE_ARG_ES_IMAGE_VERSION:-7.6.0}-x86_64.rpm \
+  && curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-${IMAGE_ARG_ES_IMAGE_VERSION:-6.8.6}-x86_64.rpm \
+  && rpm -vi filebeat-${IMAGE_ARG_ES_IMAGE_VERSION:-6.8.6}-x86_64.rpm \
   && filebeat modules enable elasticsearch \
   && sed -i 's/enabled: false/enabled: true/g' /etc/filebeat/filebeat.yml \
   && chown root /etc/filebeat/filebeat.yml /etc/filebeat/modules.d/elasticsearch.yml \
-  && rm -f filebeat-${IMAGE_ARG_ES_IMAGE_VERSION:-7.6.0}-x86_64.rpm
+  && rm -f filebeat-${IMAGE_ARG_ES_IMAGE_VERSION:-6.8.6}-x86_64.rpm
 
 
 # Remove X-Pack. see: [Unable to Uninstall X-Pack with elasticsearch:5.2.2 Docker Image #36](https://github.com/elastic/elasticsearch-docker/issues/36)
@@ -54,10 +59,6 @@ RUN set -ex \
 #   && mv /usr/share/elasticsearch/plugins/x-pack /usr/share/elasticsearch/plugins/.removing-x-pack \
 #   && mv /usr/share/elasticsearch/plugins/.removing-x-pack /usr/share/elasticsearch/plugins/x-pack \
 #   && /usr/share/elasticsearch/bin/elasticsearch-plugin remove x-pack
-
-ENV ELASTIC_CONTAINER true
-ENV PATH /usr/share/elasticsearch/bin:$PATH
-ENV JAVA_HOME /usr/share/elasticsearch/jdk
 
 WORKDIR /usr/share/elasticsearch
 

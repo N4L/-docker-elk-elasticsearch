@@ -4,7 +4,7 @@ services:
     build:
       args:
         - IMAGE_ARG_ES_IMAGE_NAME=${IMAGE_ARG_ES_IMAGE_NAME:-elasticsearch} #elasticsearch-oss
-        - IMAGE_ARG_ES_IMAGE_VERSION=${IMAGE_ARG_ES_IMAGE_VERSION:-7.6.0} #5.6.10
+        - IMAGE_ARG_ES_IMAGE_VERSION=${IMAGE_ARG_ES_IMAGE_VERSION:-6.8.6} #5.6.10
       context: .
       dockerfile: Dockerfile
     cap_add:
@@ -12,38 +12,38 @@ services:
     #command: ${ELASTICSEARCH_COMMAND:-elasticsearch}
     container_name: ${CONTAINER_HOST_NAME:-standalone.elk}-elasticsearch
     environment:
-      _action.destructive_requires_name: 'true'
-      _bootstrap.memory_lock: ${ELASTICSEARCH_BOOTSTRAP_MEMORYLOCK:-true}
-      _cluster.name: ${ELASTICSEARCH_CLUSTER_NAME:-standalone.elk-elasticsearch}
-      _discovery.type: ${ELASTICSEARCH_DISCOVERY_TYPE:-single-node}
-      _http.compression: ${ELASTICSEARCH_HTTP_COMPRESSION:-true}
-      _http.compression_level: ${ELASTICSEARCH_HTTP_COMPRESSION_LEVEL:-5}
-      _http.host: ${ELASTICSEARCH_HTTP_HOST:-0.0.0.0}
-      _http.max_content_length: ${ELASTICSEARCH_HTTP_MAX_CONTENT_LENGTH:-1024mb}
-      _http.max_header_size: ${ELASTICSEARCH_HTTP_MAX_HEADER_SIZE:-1mb}
-      _http.max_initial_line_length: ${ELASTICSEARCH_HTTP_MAX_INITIAL_LINE_LENGTH:-16kb}
-      _http.port: ${ELASTICSEARCH_HTTP_PORT:-9200}
-      _indices.memory.index_buffer_size: ${ELASTICSEARCH_INDICES_MEMORY_INDEX_BUFFER_SIZE:-30%}
-      _indices.memory.max_index_buffer_size: ${ELASTICSEARCH_INDICES_MEMORY_MAX_INDEX_BUFFER_SIZE:-3g}
-      _indices.query.bool.max_clause_count: ${INDICES_QUERY_BOOL_MAX_CLAUSE_COUNT:-8192}
-      _logger.level: ${LOGGER_LEVEL:-INFO}
-      _network.host: ${ELASTICSEARCH_NETWORK_HOST:-0.0.0.0} #network.host: _non_loopback_
-      _network.publish_host: ${ELASTICSEARCH_NETWORK_PUBLISHHOST:-172.16.238.62}
-      #_node.attr.box_type: ${ELASTICSEARCH_NODE_ATTR_BOX_TYPE:-hot}
-      _path.logs: '/var/log/elasticsearch'
-      _search.max_buckets: ${ELASTICSEARCH_SEARCH_MAX_BUCKETS:-2147483647}
-      _search.max_open_scroll_context: ${ELASTICSEARCH_SEARCH_MAX_OPEN_SCROLL_CONTEXT:-2147483647}
-      _thread_pool.write.queue_size: ${ELASTICSEARCH_THREAD_POOL_WRITE_QUEUE_SIZE:-1000}
-      _thread_pool.write.size: ${ELASTICSEARCH_THREAD_POOL_WRITE_SIZE:-2}
-      #_transport.cname_in_publish_address: ${ELASTICSEARCH_TRANSPORT_CNAME_IN_PUBLISH_ADDRESS:-true} # suppress warning: transport.publish_address was printed as [ip:port] instead of [hostname/ip:port]. This format is deprecated and will change to [hostname/ip:port] in a future version. Use -Des.transport.cname_in_publish_address=true to enforce non-deprecated formatting.
-      _transport.host: ${ELASTICSEARCH_TRANSPORT_HOST:-localhost}
-      _transport.publish_host: ${ELASTICSEARCH_TRANSPORT_PUBLISHHOST:-localhost}
-      _transport.publish_port: ${ELASTICSEARCH_TRANSPORT_PUBLISHPORT:-9300}
-      _transport.tcp.port: ${ELASTICSEARCH_TRANSPORT_TCP_PORT:-9300}
-      _xpack.security.enabled: ${XPACK_SECURITY_ENABLED:-false} # Disable X-Pack security: https://www.elastic.co/guide/en/elasticsearch/reference/5.5/security-settings.html#general-security-settings
+      ELASTICSEARCH_ACTION_DESTRUCTIVE_REQUIRES_NAME: 'true'
+      ELASTICSEARCH_BOOTSTRAP_MEMORYLOCK: ${ELASTICSEARCH_BOOTSTRAP_MEMORYLOCK:-true}
+      ELASTICSEARCH_CLUSTER_NAME: ${ELASTICSEARCH_CLUSTER_NAME:-standalone.elk-elasticsearch}
+      ELASTICSEARCH_DISCOVERY_TYPE: ${ELASTICSEARCH_DISCOVERY_TYPE:-single-node}
+      ELASTICSEARCH_HTTP_COMPRESSION: ${ELASTICSEARCH_HTTP_COMPRESSION:-true}
+      ELASTICSEARCH_HTTP_COMPRESSION_LEVEL: ${ELASTICSEARCH_HTTP_COMPRESSION_LEVEL:-5}
+      ELASTICSEARCH_HTTP_HOST: ${ELASTICSEARCH_HTTP_HOST:-0.0.0.0}
+      ELASTICSEARCH_HTTP_MAX_CONTENT_LENGTH: ${ELASTICSEARCH_HTTP_MAX_CONTENT_LENGTH:-1024mb}
+      ELASTICSEARCH_HTTP_MAX_HEADER_SIZE: ${ELASTICSEARCH_HTTP_MAX_HEADER_SIZE:-1mb}
+      ELASTICSEARCH_HTTP_MAX_INITIAL_LINE_LENGTH: ${ELASTICSEARCH_HTTP_MAX_INITIAL_LINE_LENGTH:-16kb}
+      ELASTICSEARCH_HTTP_PORT: ${ELASTICSEARCH_HTTP_PORT:-9200}
+      ELASTICSEARCH_INDICES_MEMORY_INDEX_BUFFER_SIZE: ${ELASTICSEARCH_INDICES_MEMORY_INDEX_BUFFER_SIZE:-30%}
+      ELASTICSEARCH_INDICES_MEMORY_MAX_INDEX_BUFFER_SIZE: ${ELASTICSEARCH_INDICES_MEMORY_MAX_INDEX_BUFFER_SIZE:-3g}
+      ELASTICSEARCH_INDICES_QUERY_BOOL_MAX_CLAUSE_COUNT: ${ELASTICSEARCH_INDICES_QUERY_BOOL_MAX_CLAUSE_COUNT:-8192}
+      LOGGER_LEVEL: ${LOGGER_LEVEL:-INFO}
+      ELASTICSEARCH_NETWORK_HOST: ${ELASTICSEARCH_NETWORK_HOST:-0.0.0.0} #network.host: _non_loopback_
+      ELASTICSEARCH_NETWORK_PUBLISHHOST: ${ELASTICSEARCH_NETWORK_PUBLISHHOST:-172.16.238.62}
+      #ELASTICSEARCH_NODE_ATTR_BOX_TYPE: ${ELASTICSEARCH_NODE_ATTR_BOX_TYPE:-hot}
+      path.logs: '/var/log/elasticsearch'
+      ELASTICSEARCH_SEARCH_MAX_BUCKETS: ${ELASTICSEARCH_SEARCH_MAX_BUCKETS:-2147483647}
+      ELASTICSEARCH_SEARCH_MAX_OPEN_SCROLL_CONTEXT: ${ELASTICSEARCH_SEARCH_MAX_OPEN_SCROLL_CONTEXT:-2147483647}
+      ELASTICSEARCH_THREAD_POOL_WRITE_QUEUE_SIZE: ${ELASTICSEARCH_THREAD_POOL_WRITE_QUEUE_SIZE:-1000}
+      ELASTICSEARCH_THREAD_POOL_WRITE_SIZE: ${ELASTICSEARCH_THREAD_POOL_WRITE_SIZE:-2}
+      #ELASTICSEARCH_TRANSPORT_CNAME_IN_PUBLISH_ADDRESS: ${ELASTICSEARCH_TRANSPORT_CNAME_IN_PUBLISH_ADDRESS:-true} # suppress warning: transport.publish_address was printed as [ip:port] instead of [hostname/ip:port]. This format is deprecated and will change to [hostname/ip:port] in a future version. Use -Des.transport.cname_in_publish_address=true to enforce non-deprecated formatting.
+      ELASTICSEARCH_TRANSPORT_HOST: ${ELASTICSEARCH_TRANSPORT_HOST:-localhost}
+      ELASTICSEARCH_TRANSPORT_PUBLISHHOST: ${ELASTICSEARCH_TRANSPORT_PUBLISHHOST:-localhost}
+      ELASTICSEARCH_TRANSPORT_PUBLISHPORT: ${ELASTICSEARCH_TRANSPORT_PUBLISHPORT:-9300}
+      ELASTICSEARCH_TRANSPORT_TCP_PORT: ${ELASTICSEARCH_TRANSPORT_TCP_PORT:-9300}
+      ELASTICSEARCH_XPACK_SECURITY_ENABLED: ${ELASTICSEARCH_XPACK_SECURITY_ENABLED:-false} # Disable X-Pack security: https://www.elastic.co/guide/en/elasticsearch/reference/5.5/security-settings.html#general-security-settings
       ES_JAVA_OPTS: ${ES_JAVA_OPTS:--Xms5120m -Xmx5120m}
     hostname: ${CONTAINER_HOST_NAME:-standalone.elk}-elasticsearch
-    image: cirepo/${IMAGE_ARG_ES_IMAGE_NAME:-elasticsearch}:${IMAGE_TAG:-7.6.0} #5.6.10
+    image: cirepo/${IMAGE_ARG_ES_IMAGE_NAME:-elasticsearch}:${IMAGE_TAG:-6.8.6} #5.6.10
     labels:
       deploy.config.commit: ${LABEL_DEPLOY_CONFIG_COMMIT:-unknown}
       deploy.config.name: ${LABEL_DEPLOY_CONFIG_NAME:-unknown}
