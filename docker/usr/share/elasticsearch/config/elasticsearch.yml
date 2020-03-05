@@ -1,30 +1,30 @@
 
 action.destructive_requires_name: 'true'
-bootstrap.memory_lock: ${bootstrap.memory_lock:true}
-cluster.name: ${cluster.name:standalone.elk-elasticsearch}
-discovery.type: ${discovery.type:single-node}
-http.compression: ${http.compression:true}
-http.compression_level: ${http.compression_level:5}
-http.host: ${http.host:0.0.0.0}
-http.max_content_length: ${http.max_content_length:1024mb}
-http.max_header_size: ${http.max_header_size:1mb}
-http.max_initial_line_length: ${http.max_initial_line_length:16kb}
-http.port: ${http.port:9200}
-indices.memory.index_buffer_size: ${indices.memory.index_buffer_size:30%}
-indices.memory.max_index_buffer_size: ${indices.memory.max_index_buffer_size:3g}
-indices.query.bool.max_clause_count: ${indices.query.bool.max_clause_count:8192}
-logger.level: ${logger.level:INFO}
-network.host: ${network.host:0.0.0.0} #network.host: _non_loopback_
-network.publish_host: ${network.publish_host:172.16.238.62}
-#node.attr.box_type: ${node.attr.box_type:hot}
+bootstrap.memory_lock: ${_bootstrap.memory_lock:true}
+cluster.name: ${_cluster.name:standalone.elk-elasticsearch}
+discovery.type: ${_discovery.type:single-node}
+http.compression: ${_http.compression:true}
+http.compression_level: ${_http.compression_level:5}
+http.host: ${_http.host:0.0.0.0}
+http.max_content_length: ${_http.max_content_length:1024mb}
+http.max_header_size: ${_http.max_header_size:1mb}
+http.max_initial_line_length: ${_http.max_initial_line_length:16kb}
+http.port: ${_http.port:9200}
+indices.memory.index_buffer_size: ${_indices.memory.index_buffer_size:30%}
+indices.memory.max_index_buffer_size: ${_indices.memory.max_index_buffer_size:3g}
+indices.query.bool.max_clause_count: ${_indices.query.bool.max_clause_count:8192}
+logger.level: ${_logger.level:INFO}
+network.host: ${_network.host:0.0.0.0} #network.host: _non_loopback_
+network.publish_host: ${_network.publish_host:172.16.238.62}
+#node.attr.box_type: ${_node.attr.box_type:hot}
 path.logs: '/var/log/elasticsearch'
-search.max_buckets: ${search.max_buckets:2147483647}
-search.max_open_scroll_context: ${search.max_open_scroll_context:2147483647}
-thread_pool.write.queue_size: ${thread_pool.write.queue_size:1000}
-thread_pool.write.size: ${thread_pool.write.size:2}
-#transport.cname_in_publish_address: ${transport.cname_in_publish_address:true} # suppress warning: transport.publish_address was printed as [ip:port] instead of [hostname/ip:port]. This format is deprecated and will change to [hostname/ip:port] in a future version. Use -Des.transport.cname_in_publish_address=true to enforce non-deprecated formatting.
-transport.host: ${transport.host:localhost}
-transport.publish_host: ${transport.publish_host:localhost}
-transport.publish_port: ${transport.publish_port:9300}
-transport.tcp.port: ${transport.tcp.port:9300}
-xpack.security.enabled: ${xpack.security.enabled:false} # Disable X-Pack security: https://www.elastic.co/guide/en/elasticsearch/reference/5.5/security-settings.html#general-security-settings
+search.max_buckets: ${_search.max_buckets:2147483647}
+search.max_open_scroll_context: ${_search.max_open_scroll_context:2147483647}
+thread_pool.write.queue_size: ${_thread_pool.write.queue_size:1000}
+thread_pool.write.size: ${_thread_pool.write.size:2}
+#transport.cname_in_publish_address: ${_transport.cname_in_publish_address:true} # suppress warning: transport.publish_address was printed as [ip:port] instead of [hostname/ip:port]. This format is deprecated and will change to [hostname/ip:port] in a future version. Use -Des.transport.cname_in_publish_address=true to enforce non-deprecated formatting.
+transport.host: ${_transport.host:localhost}
+transport.publish_host: ${_transport.publish_host:localhost}
+transport.publish_port: ${_transport.publish_port:9300}
+transport.tcp.port: ${_transport.tcp.port:9300}
+xpack.security.enabled: ${_xpack.security.enabled:false} # Disable X-Pack security: https://www.elastic.co/guide/en/elasticsearch/reference/5.5/security-settings.html#general-security-settings
