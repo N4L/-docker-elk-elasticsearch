@@ -10,6 +10,7 @@ http.max_content_length: ${_http.max_content_length:1024mb}
 http.max_header_size: ${_http.max_header_size:1mb}
 http.max_initial_line_length: ${_http.max_initial_line_length:16kb}
 http.port: ${_http.port:9200}
+indices.breaker.request.limit: ${_indices.breaker.request.limit:45%}
 indices.memory.index_buffer_size: ${_indices.memory.index_buffer_size:30%}
 indices.memory.max_index_buffer_size: ${_indices.memory.max_index_buffer_size:3g}
 indices.query.bool.max_clause_count: ${_indices.query.bool.max_clause_count:8192}
