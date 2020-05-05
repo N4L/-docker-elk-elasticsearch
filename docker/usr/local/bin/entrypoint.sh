@@ -14,7 +14,7 @@ function install_templates() {
 echo "starting"
 
 install_templates "template_kibana.json" &
-/usr/bin/filebeat -e &
-/usr/bin/metricbeat -e &
+#/usr/bin/filebeat -e &
+#/usr/bin/metricbeat -e &
 
 exec /usr/local/bin/docker-entrypoint.sh "$@"

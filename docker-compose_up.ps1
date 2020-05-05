@@ -1,6 +1,8 @@
 
 $p = (pwd) -replace "([A-Z]{1}):\\","/`$1/"
 $env:PWD = ($p.substring(0,2).ToLower() + $p.substring(2)).replace("\", "/")
+#$p = (pwd) -replace "([A-Z]{1}):\\","`$1:/"
+#$env:PWD = $p.replace("\", "/")
 Get-ChildItem Env:PWD
 
 $env:LOGGER_LEVEL = "INFO"

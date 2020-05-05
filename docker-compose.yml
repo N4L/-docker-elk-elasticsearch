@@ -42,7 +42,7 @@ services:
       ELASTICSEARCH_TRANSPORT_PUBLISHPORT: ${ELASTICSEARCH_TRANSPORT_PUBLISHPORT:-9300}
       ELASTICSEARCH_TRANSPORT_TCP_PORT: ${ELASTICSEARCH_TRANSPORT_TCP_PORT:-9300}
       XPACK_SECURITY_ENABLED: ${XPACK_SECURITY_ENABLED:-false} # Disable X-Pack security: https://www.elastic.co/guide/en/elasticsearch/reference/5.5/security-settings.html#general-security-settings
-      ES_JAVA_OPTS: ${ES_JAVA_OPTS:--Xms5120m -Xmx5120m}
+      ES_JAVA_OPTS: ${ES_JAVA_OPTS:--Xms4096m -Xmx4096m}
     hostname: ${CONTAINER_HOST_NAME:-standalone.elk}-elasticsearch
     image: cirepo/${IMAGE_ARG_ES_IMAGE_NAME:-elasticsearch}:${IMAGE_TAG:-7.6.0} #5.6.10
     labels:
@@ -53,7 +53,7 @@ services:
       deploy.util.ref: ${LABEL_DEPLOY_UTIL_REF:-unknown}
       instance.name.short: ${LABEL_INSTANCE_NAME_SHORT:-standalone.elk-elasticsearch}
       instance.name: ${LABEL_INSTANCE_NAME:-127.0.0.1/elk-elasticsearch/standalone}
-    mem_limit: ${MEM_LIMIT:-10g}
+    mem_limit: ${MEM_LIMIT:-6g}
     networks:
       local-network:
         ipv4_address: ${IPV4_ADDRESS:-172.16.238.62}

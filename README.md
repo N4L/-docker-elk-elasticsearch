@@ -91,3 +91,14 @@ If we are a write-heavy Elasticsearch user,
 we should use a tool like iostat to keep an eye on disk IO metrics over time.
 
 `index.translog.flush_threshold_size`
+
+### Fix permissions
+```powershell
+$p = (pwd) -replace "([A-Z]{1}):\\","/`$1/"
+$env:PWD = ($p.substring(0,2).ToLower() + $p.substring(2)).replace("\", "/")
+docker run --rm -it -v $PWD/data/usr/share/elasticsearch/data:/usr/share/elasticsearch/data docker.elastic.co/elasticsearch/elasticsearch:7.6.0 /bin/bash
+ls -la /usr/share/elasticsearch/data
+chown -R 1000 /usr/share/elasticsearch/data
+chmod -R 777 /usr/share/elasticsearch/data
+ls -la /usr/share/elasticsearch/data
+```
